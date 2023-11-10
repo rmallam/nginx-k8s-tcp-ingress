@@ -34,6 +34,33 @@ spec:
         - containerPort: 8080
           hostPort: 8111
           protocol: TCP
+        - containerPort: 2887
+          hostPort: 2887
+          protocol: TCP
+        - containerPort: 3887
+          hostPort: 3887
+          protocol: TCP
+        - containerPort: 2888
+          hostPort: 2888
+          protocol: TCP
+        - containerPort: 3888
+          hostPort: 3888
+          protocol: TCP
+        - containerPort: 2889
+          hostPort: 2889
+          protocol: TCP
+        - containerPort: 3889
+          hostPort: 3889
+          protocol: TCP
+        - containerPort: 2181
+          hostPort: 2181
+          protocol: TCP
+        - containerPort: 2182
+          hostPort: 2182
+          protocol: TCP
+        - containerPort: 2183
+          hostPort: 2183
+          protocol: TCP
         resources: {}
         terminationMessagePath: /dev/termination-log
         terminationMessagePolicy: File
