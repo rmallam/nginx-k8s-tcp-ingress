@@ -38,3 +38,19 @@ stream {
           hostPort: 8111 # container port 8080 is mapped to 8111 on host
           protocol: TCP
 ```
+
+# Haproxy
+
+Similar to Nginx, Haproxy also does the same TCP forwarding, To use Haproxy instead of nginx, follow the steps below.
+
+```
+oc new-project haproxy
+oc create sa haproxy
+oc adm policy add-scc-to-user privileged -z nghaproxyinx
+oc create cm haproxycfg --from-file=haproxy.cfg=../../nginx/haproxy.cfg
+oc apply -f haproxy-deploy.yaml
+```
+Haproxy will run on a node based on the nodeselector provided in the deployment spec and will bind the required ports to the host. 
+
+Load balancer should have this node as the backend forwarding the TCP connections.
+
