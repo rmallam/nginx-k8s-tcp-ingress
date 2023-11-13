@@ -2,17 +2,17 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: nginx
-    app.kubernetes.io/component: nginx
-    app.kubernetes.io/instance: nginx
-  name: nginx
+    app: haproxy
+    app.kubernetes.io/component: haproxy
+    app.kubernetes.io/instance: haproxy
+  name: haproxy
 spec:
   progressDeadlineSeconds: 600
   replicas: 1
   revisionHistoryLimit: 10
   selector:
     matchLabels:
-      deployment: nginx
+      deployment: haproxy
   strategy:
     type: Recreate
   template:
@@ -21,19 +21,13 @@ spec:
         openshift.io/generated-by: OpenShiftNewApp
       creationTimestamp: null
       labels:
-        deployment: nginx
+        deployment: haproxy
     spec:
       containers:
-      - image: docker.io/nginx@sha256:d2e65182b5fd330470eca9b8e23e8a1a0d87cc9b820eb1fb3f034bf8248d37ee
+      - image: docker.io/haproxy
         imagePullPolicy: IfNotPresent
-        name: nginx
+        name: haproxy
         ports:
-        - containerPort: 80
-          hostPort: 80
-          protocol: TCP
-        - containerPort: 8080
-          hostPort: 8111
-          protocol: TCP
         - containerPort: 2887
           hostPort: 2887
           protocol: TCP
@@ -65,20 +59,20 @@ spec:
         terminationMessagePath: /dev/termination-log
         terminationMessagePolicy: File
         volumeMounts:
-        - mountPath: /etc/nginx/nginx.conf
-          name: nginxconf
-          subPath: default.conf
+        - mountPath: /usr/local/etc/haproxy/haproxy.cfg
+          name: haproxycfg
+          subPath: haproxy.cfg
       dnsPolicy: ClusterFirst
       #nodeName: ip-10-0-128-219.ap-southeast-1.compute.internal
       restartPolicy: Always
       schedulerName: default-scheduler
       securityContext: {}
-      serviceAccount: nginx
-      serviceAccountName: nginx
+      serviceAccount: haproxy
+      serviceAccountName: haproxy
       terminationGracePeriodSeconds: 30
       volumes:
       - configMap:
           defaultMode: 420
-          name: nginx
-        name: nginxconf
+          name: haproxycfg
+        name: haproxycfg
 
